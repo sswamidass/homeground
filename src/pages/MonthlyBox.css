@@ -1,0 +1,260 @@
+.monthly-hero {
+  background: linear-gradient(135deg, var(--forest-green) 0%, var(--sage-green) 100%);
+  color: var(--white);
+  padding: 6rem 0 4rem;
+  text-align: center;
+}
+
+.monthly-hero h1 {
+  color: var(--white);
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.monthly-lead {
+  font-size: 1.35rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.whats-inside {
+  background-color: var(--off-white);
+}
+
+.whats-inside h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.inside-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.inside-item {
+  background-color: var(--white);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+}
+
+.inside-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.inside-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.inside-item h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.inside-item p {
+  color: var(--text-gray);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.sample-boxes h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section-intro {
+  text-align: center;
+  font-size: 1.15rem;
+  color: var(--text-gray);
+  margin-bottom: 3rem;
+}
+
+.boxes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.box-card {
+  background-color: var(--white);
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: var(--transition);
+}
+
+.box-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.box-header {
+  background: linear-gradient(135deg, var(--lake-blue), var(--deep-blue));
+  color: var(--white);
+  padding: 2rem 2.5rem;
+}
+
+.box-month {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.box-header h3 {
+  color: var(--white);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.box-content {
+  padding: 2.5rem;
+}
+
+.box-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.box-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.label-icon {
+  font-size: 1.5rem;
+}
+
+.section-label h4 {
+  color: var(--lake-blue);
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.book-title,
+.coffee-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--deep-blue);
+  margin-bottom: 0.5rem;
+}
+
+.book-meta,
+.coffee-meta {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.book-description,
+.coffee-notes,
+.coffee-origin {
+  color: var(--text-gray);
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+}
+
+.coffee-origin {
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+.box-extras {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.extra-item {
+  background-color: var(--sandy-beige);
+  padding: 1.5rem;
+  border-radius: 15px;
+}
+
+.extra-item strong {
+  display: block;
+  color: var(--deep-blue);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.extra-item p {
+  color: var(--text-gray);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.box-cta {
+  background-color: var(--off-white);
+  text-align: center;
+}
+
+.box-cta h2 {
+  margin-bottom: 1rem;
+}
+
+.box-cta p {
+  font-size: 1.25rem;
+  color: var(--text-gray);
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .inside-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .box-extras {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .monthly-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .monthly-lead {
+    font-size: 1.15rem;
+  }
+
+  .inside-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .box-header {
+    padding: 1.5rem;
+  }
+
+  .box-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .box-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .monthly-hero h1 {
+    font-size: 2rem;
+  }
+}

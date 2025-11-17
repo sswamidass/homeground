@@ -1,0 +1,422 @@
+.subscription-hero {
+  background: linear-gradient(135deg, var(--lake-blue) 0%, var(--deep-blue) 100%);
+  color: var(--white);
+  padding: 6rem 0 4rem;
+  text-align: center;
+}
+
+.subscription-hero h1 {
+  color: var(--white);
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.subscription-lead {
+  font-size: 1.35rem;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.pricing-section {
+  background-color: var(--off-white);
+  padding-top: 4rem;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.plan-card {
+  background-color: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  border: 3px solid transparent;
+}
+
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.plan-card.selected {
+  border-color: var(--lake-blue);
+  box-shadow: 0 15px 35px rgba(74, 144, 199, 0.2);
+}
+
+.plan-card.popular {
+  border-color: var(--forest-green);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--forest-green), var(--sage-green));
+  color: var(--white);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(74, 124, 89, 0.3);
+}
+
+.plan-card h3 {
+  font-size: 1.75rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--deep-blue);
+}
+
+.plan-price {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.price-amount {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--lake-blue);
+  font-family: var(--font-heading);
+}
+
+.price-billing {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text-gray);
+}
+
+.plan-savings {
+  text-align: center;
+  color: var(--forest-green);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.plan-features li {
+  padding: 0.75rem 0;
+  color: var(--text-gray);
+  line-height: 1.6;
+  border-bottom: 1px solid var(--light-gray);
+  padding-left: 1.75rem;
+  position: relative;
+}
+
+.plan-features li:last-child {
+  border-bottom: none;
+}
+
+.plan-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--forest-green);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.plan-button {
+  width: 100%;
+}
+
+.subscription-note {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text-gray);
+  font-size: 0.95rem;
+}
+
+.value-section h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.value-breakdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.value-item {
+  background-color: var(--white);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  text-align: center;
+  min-width: 140px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.value-item.total {
+  background: linear-gradient(135deg, var(--lake-blue), var(--deep-blue));
+  color: var(--white);
+  padding: 2.5rem 2rem;
+}
+
+.value-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--lake-blue);
+  font-family: var(--font-heading);
+  margin-bottom: 0.5rem;
+}
+
+.value-item.total .value-amount {
+  color: var(--white);
+  font-size: 2.5rem;
+}
+
+.value-item p {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.value-item.total p {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.value-item.total strong {
+  color: var(--sandy-beige);
+}
+
+.value-plus,
+.value-equals {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+}
+
+.value-note {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--forest-green);
+  font-weight: 500;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.gifting-section {
+  background-color: var(--white);
+}
+
+.gifting-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.gifting-text h2 {
+  margin-bottom: 1.5rem;
+}
+
+.gifting-text p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--text-gray);
+  margin-bottom: 1.5rem;
+}
+
+.gifting-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.gifting-benefits li {
+  padding: 0.75rem 0;
+  color: var(--text-gray);
+  line-height: 1.7;
+  padding-left: 1.75rem;
+  position: relative;
+}
+
+.gifting-benefits li::before {
+  content: '🎁';
+  position: absolute;
+  left: 0;
+  font-size: 1.1rem;
+}
+
+.gifting-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gifting-image {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.testimonials-section h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-stars {
+  color: #f59e0b;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.testimonial-quote {
+  font-style: italic;
+  color: var(--text-gray);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.testimonial-author strong {
+  color: var(--deep-blue);
+  font-weight: 600;
+}
+
+.testimonial-author span {
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+.testimonial-plan {
+  color: var(--forest-green) !important;
+  font-weight: 500 !important;
+}
+
+.faq-preview {
+  background-color: var(--sandy-beige);
+}
+
+.faq-preview h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.faq-item {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  color: var(--lake-blue);
+}
+
+.faq-item p {
+  color: var(--text-gray);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.faq-link {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-gray);
+}
+
+.faq-link a {
+  color: var(--lake-blue);
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+  }
+
+  .gifting-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .gifting-visual {
+    order: -1;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .subscription-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .subscription-lead {
+    font-size: 1.15rem;
+  }
+
+  .value-breakdown {
+    flex-direction: column;
+  }
+
+  .value-plus,
+  .value-equals {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .subscription-hero h1 {
+    font-size: 2rem;
+  }
+}
