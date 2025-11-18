@@ -26,7 +26,7 @@ function Navigation({ isTransparent = false }: NavigationProps) {
     <nav className={`navigation ${isTransparent ? 'transparent' : ''}`}>
       <div className="nav-container">
         <Link to="/" className="logo" onClick={closeMenu}>
-          <img src="/logo.png" alt="Homeground Coffee" style={{ height: '60px', width: 'auto' }} />
+          <img src="/logo.png" alt="Homeground Coffee" style={{ height: '240px', width: 'auto' }} />
         </Link>
 
         <button
