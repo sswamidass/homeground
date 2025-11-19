@@ -1,0 +1,13 @@
+/*
+Theme Name: Homeground
+Theme URI: https://example.com/homeground
+Author: Homeground
+Author URI: https://example.com
+Description: Minimal theme scaffold for headless WP + React integration.
+Version: 0.1
+License: GNU General Public License v2 or later
+Text Domain: homeground
+*/
+
+body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+

@@ -8,6 +8,7 @@ import Coffee from './pages/Coffee';
 import Subscription from './pages/Subscription';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
+import WPExample from './wp/WPExample';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/subscription" element={<Subscription />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/wp-posts" element={<WPExample />} />
         </Routes>
       </Layout>
     </Router>

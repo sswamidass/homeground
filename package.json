@@ -7,12 +7,22 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync:assets": "node ./scripts/sync-assets.js",
+    "start:wp": "bash ./scripts/start-stack.sh",
+    "zip:theme": "bash ./scripts/zip-theme.sh",
+    "migrate:render-import": "node ./scripts/migrate/render-and-import.mjs",
+    "migrate:import-books-csv": "node ./scripts/migrate/import-books-csv.mjs"
   },
+ 
+  "homepage": "./",
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.6"
+    "react-router-dom": "^7.9.6",
+    "playwright": "^1.36.0",
+    "node-fetch": "^3.4.0",
+    "csv-parse": "^5.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -28,4 +38,5 @@
     "typescript-eslint": "^8.46.3",
     "vite": "^7.2.2"
   }
+  
 }
