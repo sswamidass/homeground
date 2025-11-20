@@ -1,0 +1,40 @@
+[2025-11-19T17:05:35.125Z] INFO Rendering http://localhost:5173/
+[2025-11-19T17:05:43.647Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/home.html' --post_type=page --post_title='Home' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:05:43.648Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:05:43.649Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'front-page.php' --allow-root"
+[2025-11-19T17:05:43.649Z] INFO Assigned template front-page.php
+[2025-11-19T17:05:44.052Z] INFO Rendering http://localhost:5173/about
+[2025-11-19T17:05:56.156Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/about.html' --post_type=page --post_title='About' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:05:56.157Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:05:56.157Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-about.php' --allow-root"
+[2025-11-19T17:05:56.158Z] INFO Assigned template page-about.php
+[2025-11-19T17:05:56.401Z] INFO Rendering http://localhost:5173/monthly-box
+[2025-11-19T17:06:01.461Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/monthly-box.html' --post_type=page --post_title='Monthly Box' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:06:01.461Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:06:01.462Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-monthly-box.php' --allow-root"
+[2025-11-19T17:06:01.462Z] INFO Assigned template page-monthly-box.php
+[2025-11-19T17:06:01.668Z] INFO Rendering http://localhost:5173/books
+[2025-11-19T17:06:06.704Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/books.html' --post_type=page --post_title='Books' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:06:06.704Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:06:06.705Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-books.php' --allow-root"
+[2025-11-19T17:06:06.705Z] INFO Assigned template page-books.php
+[2025-11-19T17:06:06.934Z] INFO Rendering http://localhost:5173/coffee
+[2025-11-19T17:06:17.761Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/coffee.html' --post_type=page --post_title='Coffee' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:06:17.762Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:06:17.762Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-coffee.php' --allow-root"
+[2025-11-19T17:06:17.762Z] INFO Assigned template page-coffee.php
+[2025-11-19T17:06:17.990Z] INFO Rendering http://localhost:5173/subscription
+[2025-11-19T17:06:29.101Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/subscription.html' --post_type=page --post_title='Subscription' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:06:29.102Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:06:29.102Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-subscription.php' --allow-root"
+[2025-11-19T17:06:29.102Z] INFO Assigned template page-subscription.php
+[2025-11-19T17:06:29.326Z] INFO Rendering http://localhost:5173/faq
+[2025-11-19T17:06:34.453Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/faq.html' --post_type=page --post_title='FAQ' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:06:34.453Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:06:34.454Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-faq.php' --allow-root"
+[2025-11-19T17:06:34.454Z] INFO Assigned template page-faq.php
+[2025-11-19T17:06:34.680Z] INFO Rendering http://localhost:5173/contact
+[2025-11-19T17:06:39.879Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post create '/Users/223024491/Downloads/homeground/migrate/html/contact.html' --post_type=page --post_title='Contact' --post_status=publish --porcelain --allow-root"
+[2025-11-19T17:06:39.879Z] INFO Created page with ID [dry-run id]
+[2025-11-19T17:06:39.879Z] INFO [dry-run] would run: docker compose exec wordpress bash -lc "wp post meta update  _wp_page_template 'page-contact.php' --allow-root"
+[2025-11-19T17:06:39.879Z] INFO Assigned template page-contact.php

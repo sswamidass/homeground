@@ -4,8 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 import playwright from 'playwright';
-import { fileURLToPath as fURL } from 'url';
-import fetch from 'node-fetch';
+// using global fetch available in Node 18+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -172,7 +171,7 @@ function escapeShell(s) {
           // fetch linked CSS and search for url(...) patterns
           for (const linkHref of cssLinks) {
             try {
-              const cssRes = await (await import('node-fetch')).default(linkHref);
+              const cssRes = await fetch(linkHref);
               if (cssRes.ok) {
                 const cssText = await cssRes.text();
                 let mm;
