@@ -43,6 +43,7 @@ Text Domain: homeground
 
 body {
 	margin: 0;
+	padding-top: 140px;
 	font-family: var(--font-body);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -214,8 +215,10 @@ img {
 .navigation {
 	background-color: var(--white);
 	box-shadow: 0 1px 0 var(--light-gray);
-	position: sticky;
+	position: fixed;
 	top: 0;
+	left: 0;
+	right: 0;
 	z-index: 1000;
 	padding: 1.5rem 0;
 	border-bottom: 1px solid var(--light-gray);
@@ -238,7 +241,7 @@ img {
 }
 
 .navigation.transparent .menu-toggle span {
-	background-color: var(--white);
+	background-color: transparent;
 }
 
 .navigation.transparent .logo:hover {
@@ -253,7 +256,7 @@ img {
 }
 
 .navigation.transparent .nav-menu a:not(.btn).active::after {
-	background-color: var(--white);
+	background-color: transparent;
 }
 
 .nav-container {
