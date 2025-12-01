@@ -254,6 +254,16 @@ function homeground_add_meta_boxes() {
         'normal',
         'high'
     );
+    
+    // Homepage CTA button meta box
+    add_meta_box(
+        'homepage_cta_button',
+        'Hero Button Text',
+        'homeground_homepage_cta_callback',
+        'page',
+        'side',
+        'default'
+    );
 }
 add_action('add_meta_boxes', 'homeground_add_meta_boxes');
 
@@ -351,6 +361,18 @@ function homeground_testimonial_meta_callback($post) {
     <?php
 }
 
+// Homepage CTA button callback
+function homeground_homepage_cta_callback($post) {
+    wp_nonce_field('homepage_cta_meta', 'homepage_cta_meta_nonce');
+    $cta_text = get_post_meta($post->ID, '_cta_button_text', true);
+    if (!$cta_text) $cta_text = 'Start Your Adventure';
+    ?>
+    <p><label>Button Text:</label></p>
+    <input type="text" name="cta_button_text" value="<?php echo esc_attr($cta_text); ?>" class="widefat">
+    <p><em>Leave blank to use default: "Start Your Adventure"</em></p>
+    <?php
+}
+
 // Save meta box data
 function homeground_save_meta_boxes($post_id) {
     // Monthly Box
@@ -396,6 +418,11 @@ function homeground_save_meta_boxes($post_id) {
         if (isset($_POST['author_name'])) update_post_meta($post_id, '_author_name', sanitize_text_field($_POST['author_name']));
         if (isset($_POST['author_location'])) update_post_meta($post_id, '_author_location', sanitize_text_field($_POST['author_location']));
         if (isset($_POST['rating'])) update_post_meta($post_id, '_rating', absint($_POST['rating']));
+    }
+    
+    // Homepage CTA Button
+    if (isset($_POST['homepage_cta_meta_nonce']) && wp_verify_nonce($_POST['homepage_cta_meta_nonce'], 'homepage_cta_meta')) {
+        if (isset($_POST['cta_button_text'])) update_post_meta($post_id, '_cta_button_text', sanitize_text_field($_POST['cta_button_text']));
     }
 }
 add_action('save_post', 'homeground_save_meta_boxes');

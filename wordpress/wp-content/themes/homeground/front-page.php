@@ -16,9 +16,15 @@ get_header();
         <h1><?php the_title(); ?></h1>
         <?php if ( has_excerpt() ) : ?>
           <p class="hero-subtitle"><?php the_excerpt(); ?></p>
+        <?php else : ?>
+          <p class="hero-subtitle">Welcome to Homeground, where Great Lakes stories meet artisan coffee. Every month, we deliver carefully curated boxes featuring beautiful children's books and specialty coffee from local roasters.</p>
         <?php endif; ?>
         <div class="hero-cta">
-          <a href="<?php echo esc_url( home_url('/subscription') ); ?>" class="btn btn-hero">Start Your Adventure</a>
+          <?php 
+          $cta_text = get_post_meta(get_the_ID(), '_cta_button_text', true);
+          if (!$cta_text) $cta_text = 'Start Your Adventure';
+          ?>
+          <a href="<?php echo esc_url( home_url('/subscription') ); ?>" class="btn btn-hero"><?php echo esc_html($cta_text); ?></a>
         </div>
       </div>
     </div>
