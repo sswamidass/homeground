@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Home.css';
-import heroImage from '../assets/pexels-125322096-9990576 copy.jpg';
+import heroImage from '../assets/fall.jpeg';
 
 function Home() {
   return (
@@ -8,7 +8,7 @@ function Home() {
       <section className="hero">
         <img
           src={heroImage}
-          alt="Great Lakes beach and lifeguard tower"
+          alt="fall"
           className="hero-background"
         />
         <div className="hero-overlay">
