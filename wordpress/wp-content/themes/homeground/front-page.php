@@ -16,8 +16,6 @@ get_header();
         <h1><?php the_title(); ?></h1>
         <?php if ( has_excerpt() ) : ?>
           <p class="hero-subtitle"><?php the_excerpt(); ?></p>
-        <?php else : ?>
-          <p class="hero-subtitle">Great Lakes Stories.</p>
         <?php endif; ?>
         <div class="hero-cta">
           <a href="<?php echo esc_url( home_url('/subscription') ); ?>" class="btn btn-hero">Start Your Adventure</a>
