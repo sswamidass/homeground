@@ -397,4 +397,16 @@ function homeground_save_meta_boxes($post_id) {
 }
 add_action('save_post', 'homeground_save_meta_boxes');
 
+// Increase upload size limit
+@ini_set('upload_max_filesize', '64M');
+@ini_set('post_max_size', '64M');
+@ini_set('memory_limit', '256M');
+@ini_set('max_execution_time', '600');
+
+// Add filter to increase WordPress upload limit
+add_filter('upload_size_limit', 'homeground_increase_upload');
+function homeground_increase_upload( $bytes ) {
+    return 67108864; // 64 MB in bytes
+}
+
 ?>
