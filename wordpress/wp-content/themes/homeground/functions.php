@@ -10,6 +10,9 @@ add_action('wp_enqueue_scripts', 'homeground_enqueue_assets');
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 
+// Enable excerpts for pages
+add_post_type_support('page', 'excerpt');
+
 // Register menus
 function homeground_register_menus() {
     register_nav_menus(array(
