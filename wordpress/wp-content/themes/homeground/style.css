@@ -9,6 +9,20 @@ License: GNU General Public License v2 or later
 Text Domain: homeground
 */
 
+@font-face {
+	font-family: 'Magic Vintage';
+	src: url('assets/Magic Vintage TTF.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Bodoni Moda';
+	src: url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
+	font-display: swap;
+}
+
 :root {
 	--deep-blue: #0d3b52;
 	--lake-blue: #2c5f7a;
@@ -212,17 +226,15 @@ img {
 	 -------------------------------------------------- */
 
 .navigation {
-	box-shadow: 0 1px 0 var(--light-gray);
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 1000;
 	padding: 1.5rem 0;
-	border-bottom: 1px solid var(--light-gray);
 	transition: var(--transition);
-    padding-top: 50px;
-    background-color: #084231;
+	padding-top: 50px;
+	background-color: transparent;
 }
 
 .navigation.transparent {
@@ -312,7 +324,7 @@ img {
 .menu-toggle span {
 	width: 28px;
 	height: 2px;
-	background-color: var(--dark);
+	background-color: var(--white);
 	transition: var(--transition);
 	border-radius: 0;
 }
@@ -344,12 +356,13 @@ img {
 
 .nav-menu a {
 	font-weight: 400;
-	color: var(--white);
+	color: var(--black);
 	padding: 0.5rem 0;
 	position: relative;
 	transition: var(--transition);
 	font-size: 0.95rem;
 	letter-spacing: 0.02em;
+    color: var(--white)
 }
 
 .nav-menu a:not(.btn):hover {
@@ -378,6 +391,7 @@ img {
 .nav-cta .btn {
 	padding: 0.75rem 2rem;
 	font-size: 0.85rem;
+    color: var(--white)
 }
 
 @media (max-width: 1024px) {
@@ -432,6 +446,7 @@ img {
 		padding: 1.25rem 0;
 		width: 100%;
 		font-size: 1.1rem;
+        color: var(--dark)
 	}
 
 	.nav-menu a:not(.btn).active::after {
@@ -1017,23 +1032,24 @@ img {
 
 .hero h1 {
 	color: var(--white);
-	font-size: 6rem;
+	font-size: 3rem;
 	margin-bottom: 1.5rem;
 	line-height: 1.05;
 	font-weight: 800;
 	letter-spacing: -0.03em;
 	width: auto;
 	text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    width: 50%;
 }
 
-.hero-subtitle {
+.hero-subtitle{
 	font-size: 1.5rem;
 	font-family: var(--font-body);
 	margin-bottom: 3rem;
 	color: var(--white);
 	font-weight: 300;
 	line-height: 1.6;
-	max-width: 600px;
+	width: auto;
 	text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
 }
 

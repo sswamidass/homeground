@@ -14,11 +14,13 @@ get_header();
     <div class="hero-overlay">
       <div class="hero-content">
         <h1><?php the_title(); ?></h1>
-        <?php if ( has_excerpt() ) : ?>
-          <p class="hero-subtitle"><?php the_excerpt(); ?></p>
-        <?php else : ?>
-          <p class="hero-subtitle">Welcome to Homeground, where Great Lakes stories meet artisan coffee. Every month, we deliver carefully curated boxes featuring beautiful children's books and specialty coffee from local roasters.</p>
-        <?php endif; ?>
+        <p class="hero-subtitle">
+          <?php if ( has_excerpt() ) : ?>
+            <?php echo esc_html( get_the_excerpt() ); ?>
+          <?php else : ?>
+            Welcome to Homeground, where Great Lakes stories meet artisan coffee. Every month, we deliver carefully curated boxes featuring beautiful children's books and specialty coffee from local roasters.
+          <?php endif; ?>
+        </p>
         <div class="hero-cta">
           <?php 
           $cta_text = get_post_meta(get_the_ID(), '_cta_button_text', true);

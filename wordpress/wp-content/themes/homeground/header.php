@@ -13,7 +13,7 @@
           <?php if ( function_exists( 'the_custom_logo' ) && has_custom_logo() ) {
             the_custom_logo();
           } else { ?>
-            <img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/logo.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?>" style="height:65px; width:auto;" />
+            <img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/logo-alt.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?>" style="height:65px; width:auto;" />
             <!--<span class="logo-text"><?php bloginfo( 'name' ); ?></span>-->
           <?php } ?>
         </a>
