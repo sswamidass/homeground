@@ -3,13 +3,16 @@ FROM wordpress:php8.2-apache
 # Install additional PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Create themes directory and copy our theme
-RUN mkdir -p /var/www/html/wp-content/themes/homeground
-COPY wordpress/wp-content/themes/homeground /var/www/html/wp-content/themes/homeground
+# Copy theme to temp location
+COPY wordpress/wp-content/themes/homeground /tmp/homeground-theme
 
-# Set ownership and permissions
-RUN chown -R www-data:www-data /var/www/html/wp-content/themes/homeground && \
-    chmod -R 755 /var/www/html/wp-content/themes/homeground
+# Create mu-plugins directory and copy installer plugin
+RUN mkdir -p /var/www/html/wp-content/mu-plugins
+COPY wordpress/wp-content/mu-plugins/install-homeground-theme.php /var/www/html/wp-content/mu-plugins/
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/wp-content/mu-plugins && \
+    chmod -R 755 /var/www/html/wp-content/mu-plugins
 
 # Expose port 80
 EXPOSE 80
