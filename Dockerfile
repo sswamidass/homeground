@@ -3,6 +3,9 @@ FROM wordpress:php8.2-apache
 # Install additional PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
+# Copy PHP config for larger uploads
+COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 # Copy theme to temp location
 COPY wordpress/wp-content/themes/homeground /tmp/homeground-theme
 
