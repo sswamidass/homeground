@@ -1,8 +1,11 @@
 <?php
 function homeground_enqueue_assets() {
-    wp_enqueue_style('homeground-style', get_stylesheet_uri(), array(), filemtime( get_stylesheet_directory() . '/style.css' ));
+    wp_enqueue_style('homeground-style', get_stylesheet_uri(), array(), '1.0.0');
     // Navigation script (handles mobile toggle and active link)
-    wp_enqueue_script('homeground-nav', get_stylesheet_directory_uri() . '/assets/js/navigation.js', array(), filemtime( get_stylesheet_directory() . '/assets/js/navigation.js' ), true);
+    $nav_script = get_stylesheet_directory_uri() . '/assets/js/navigation.js';
+    if (file_exists(get_stylesheet_directory() . '/assets/js/navigation.js')) {
+        wp_enqueue_script('homeground-nav', $nav_script, array(), '1.0.0', true);
+    }
 }
 add_action('wp_enqueue_scripts', 'homeground_enqueue_assets');
 
