@@ -3,14 +3,13 @@ FROM wordpress:php8.2-apache
 # Install additional PHP extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Copy custom theme to temp location first
-COPY --chown=www-data:www-data wordpress/wp-content/themes/homeground /tmp/homeground-theme
+# Create themes directory and copy our theme
+RUN mkdir -p /var/www/html/wp-content/themes/homeground
+COPY wordpress/wp-content/themes/homeground /var/www/html/wp-content/themes/homeground
 
-# Copy custom entrypoint script
-COPY docker-entrypoint.sh /usr/local/bin/custom-entrypoint.sh
-RUN chmod +x /usr/local/bin/custom-entrypoint.sh
+# Set ownership and permissions
+RUN chown -R www-data:www-data /var/www/html/wp-content/themes/homeground && \
+    chmod -R 755 /var/www/html/wp-content/themes/homeground
 
 # Expose port 80
 EXPOSE 80
-
-ENTRYPOINT ["/usr/local/bin/custom-entrypoint.sh"]
