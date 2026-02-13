@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Homeground - Great Lakes Stories
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack application combining a React frontend with a WordPress backend, celebrating the culture and stories of the Great Lakes region.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+homeground/
+├── frontend/                    # React + Vite application
+│   ├── src/                     # React components and pages
+│   ├── public/                  # Static assets (logo, images)
+│   ├── index.html               # HTML entry point
+│   ├── package.json             # Frontend dependencies
+│   ├── vite.config.ts           # Vite configuration
+│   ├── tsconfig.json            # TypeScript configuration
+│   └── eslint.config.js         # ESLint configuration
+│
+├── backend/                     # WordPress installation
+│   ├── wordpress/               # WordPress core files
+│   ├── scripts/                 # WordPress setup and migration scripts
+│   ├── docker-compose.yml       # Docker configuration for WordPress + MySQL
+│   └── .env                     # Environment variables for WordPress
+│
+├── docs/                        # Documentation
+│   └── README.md                # Full documentation
+│
+├── .env                         # Shared environment variables
+├── .gitignore                   # Git ignore rules
+└── README.md                    # This file
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Frontend (React)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd frontend
+npm install
+npm run dev
 ```
+
+The frontend runs on **http://localhost:5173**
+
+### Backend (WordPress)
+
+```bash
+cd backend
+docker-compose up -d
+```
+
+WordPress runs on **http://localhost:8000**
+
+## Architecture
+
+- **Frontend**: React 19 with TypeScript, Vite, React Router
+- **Backend**: WordPress with custom plugin for content management
+- **API**: WordPress REST API consumed by React frontend
+- **Database**: MySQL 8.0 (Docker)
+
+## Content Management
+
+Content is managed in WordPress and fetched via REST API by the React frontend:
+- Books (custom post type: `hg_book`)
+- Coffee Roasters (custom post type: `hg_coffee`)
+- Monthly Boxes (custom post type: `hg_monthly_box`)
+
+## Deployment
+
+See [docs/README.md](docs/README.md) for detailed deployment instructions.

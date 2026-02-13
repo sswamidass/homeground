@@ -1,0 +1,260 @@
+.monthly-box {
+  width: 100%;
+}
+
+.monthly-hero {
+  background: linear-gradient(135deg, var(--forest-green) 0%, var(--lake-blue) 100%);
+  color: var(--white);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.monthly-hero .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.monthly-hero h1 {
+  color: var(--white);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.monthly-lead {
+  font-size: 1.1rem;
+  color: var(--sand);
+  line-height: 1.8;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 6rem 0;
+}
+
+.whats-inside {
+  background-color: var(--white);
+}
+
+.whats-inside h2 {
+  text-align: center;
+  color: var(--deep-blue);
+  margin-bottom: 4rem;
+}
+
+.inside-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+}
+
+.inside-item {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--cream);
+  border-radius: 8px;
+}
+
+.inside-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.inside-item h3 {
+  color: var(--deep-blue);
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+}
+
+.inside-item p {
+  color: var(--text-gray);
+  line-height: 1.7;
+}
+
+.sample-boxes {
+  background-color: var(--sandy-beige);
+}
+
+.sample-boxes h2 {
+  text-align: center;
+  color: var(--deep-blue);
+  margin-bottom: 1.5rem;
+}
+
+.section-intro {
+  text-align: center;
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  font-size: 1.05rem;
+}
+
+.boxes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2.5rem;
+}
+
+.box-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.box-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.box-header {
+  background: linear-gradient(135deg, var(--lake-blue), var(--sky-blue));
+  color: var(--white);
+  padding: 2rem;
+}
+
+.box-month {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.box-header h3 {
+  color: var(--white);
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.box-content {
+  padding: 2rem;
+  flex: 1;
+}
+
+.box-section {
+  margin-bottom: 2rem;
+}
+
+.box-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.label-icon {
+  font-size: 1.5rem;
+}
+
+.section-label h4,
+.box-content h4 {
+  color: var(--deep-blue);
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.book-info,
+.coffee-info,
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.book-title,
+.coffee-name {
+  color: var(--text-dark);
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  font-size: 1.05rem;
+}
+
+.book-meta,
+.coffee-roaster {
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0;
+}
+
+.book-description,
+.coffee-notes,
+.activity-text {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.fact-card {
+  background-color: var(--light-blue);
+  border-left: 4px solid var(--lake-blue);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 4px;
+  font-style: italic;
+  color: var(--text-dark);
+}
+
+.boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.box-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.box-content ul li {
+  padding: 0.5rem 0;
+  color: var(--text-gray);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.box-content ul li:before {
+  content: "✓";
+  color: var(--lake-blue);
+  font-weight: bold;
+  margin-right: 0.5rem;
+  position: absolute;
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .monthly-hero h1 {
+    font-size: 2rem;
+  }
+
+  .monthly-lead {
+    font-size: 0.95rem;
+  }
+
+  .inside-grid,
+  .boxes-list {
+    grid-template-columns: 1fr;
+  }
+}
+

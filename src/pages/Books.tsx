@@ -1,7 +1,49 @@
+import { useEffect, useState } from 'react';
 import './Books.css';
+import { wordpressAPI, type Book } from '../services/wordpressAPI';
+
+interface BookDisplay extends Book {
+  author?: string;
+  illustrator?: string;
+  ageRange?: string;
+  theme?: string;
+  features?: string[];
+}
 
 function Books() {
-  const books = [
+  const [books, setBooks] = useState<BookDisplay[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const wpBooks = await wordpressAPI.getBooks();
+        if (wpBooks && wpBooks.length > 0) {
+          setBooks(wpBooks.map(book => ({
+            ...book,
+            author: book.meta?.hg_author || 'Unknown Author',
+            illustrator: book.meta?.hg_illustrator || 'Unknown Illustrator',
+            ageRange: book.meta?.hg_age_range || 'All ages',
+            theme: book.meta?.hg_theme || 'Great Lakes',
+            features: book.meta?.hg_features || [],
+            description: book.content?.replace(/<[^>]*>/g, '') || '',
+          })));
+        } else {
+          // Fallback to hardcoded data if WordPress is unavailable
+          setBooks(defaultBooks as BookDisplay[]);
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error);
+        setBooks(defaultBooks as BookDisplay[]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  const defaultBooks = [
     {
       title: 'The Lighthouse Keeper\'s Secret',
       author: 'Emily Waters',
@@ -75,6 +117,10 @@ function Books() {
       features: ['26 pages', 'Nature illustrations', 'Dune formation guide']
     }
   ];
+
+  if (loading) {
+    return <div className="books"><p>Loading books...</p></div>;
+  }
 
   return (
     <div className="books">

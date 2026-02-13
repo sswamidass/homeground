@@ -8,12 +8,9 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
   return (
     <div className="app">
-      <Navigation isTransparent={isHomePage} />
+      <Navigation isTransparent={true} />
       <main>{children}</main>
       <Footer />
     </div>

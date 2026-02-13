@@ -1,0 +1,281 @@
+.books {
+  width: 100%;
+}
+
+.books-hero {
+  background: linear-gradient(135deg, var(--sky-blue) 0%, var(--lake-blue) 100%);
+  color: var(--white);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.books-hero h1 {
+  color: var(--white);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.books-lead {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--sand);
+}
+
+.books-philosophy {
+  background-color: var(--white);
+  padding: 6rem 0;
+}
+
+.philosophy-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.philosophy-text h2 {
+  color: var(--deep-blue);
+  margin-bottom: 1.5rem;
+}
+
+.philosophy-list {
+  list-style: none;
+  padding: 0;
+}
+
+.philosophy-list li {
+  padding: 0.75rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-dark);
+}
+
+.philosophy-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--lake-blue);
+  font-weight: bold;
+}
+
+.philosophy-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-stack {
+  display: flex;
+  gap: 1rem;
+}
+
+.stack-book {
+  width: 80px;
+  height: 120px;
+  border-radius: 4px;
+  transform: rotate(-5deg);
+}
+
+.stack-book:nth-child(2) {
+  transform: rotate(0deg);
+  z-index: 1;
+}
+
+.stack-book:nth-child(3) {
+  transform: rotate(5deg);
+}
+
+.books-gallery {
+  background-color: var(--cream);
+  padding: 6rem 0;
+}
+
+.books-gallery h2 {
+  text-align: center;
+  color: var(--deep-blue);
+  margin-bottom: 4rem;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.book-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.book-cover-placeholder {
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(135deg, var(--lake-blue), var(--sky-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.book-cover-placeholder svg {
+  width: 100%;
+  height: 100%;
+}
+
+.book-details {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-age-tag {
+  display: inline-block;
+  background-color: var(--lake-blue);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  align-self: flex-start;
+}
+
+.book-details h3 {
+  color: var(--deep-blue);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.book-creators {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.book-creators strong {
+  color: var(--text-dark);
+}
+
+.book-theme {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.book-theme strong {
+  color: var(--text-dark);
+}
+
+.book-description {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.book-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.book-features li {
+  padding: 0.5rem 0;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.book-features li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--lake-blue);
+  font-weight: bold;
+}
+
+.authors-section {
+  padding: 6rem 0;
+  background-color: var(--white);
+}
+
+.authors-section h2 {
+  text-align: center;
+  color: var(--deep-blue);
+  margin-bottom: 1.5rem;
+}
+
+.section-intro {
+  text-align: center;
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  font-size: 1.05rem;
+}
+
+.authors-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.benefit-item {
+  padding: 2rem;
+  background-color: var(--cream);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.benefit-item h3 {
+  color: var(--deep-blue);
+  margin-bottom: 1rem;
+}
+
+.benefit-item p {
+  color: var(--text-gray);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .books-hero h1 {
+    font-size: 2rem;
+  }
+
+  .books-lead {
+    font-size: 0.95rem;
+  }
+
+  .philosophy-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .books-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

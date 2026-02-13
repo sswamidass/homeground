@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: homeground-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - homeground-network
+
+  wordpress:
+    image: wordpress:latest
+    container_name: homeground-wp
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DEBUG: 'true'
+    ports:
+      - "8000:80"
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - homeground-network
+
+volumes:
+  db_data:
+  wp_data:
+
+networks:
+  homeground-network:
+    driver: bridge
