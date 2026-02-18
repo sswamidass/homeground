@@ -1,7 +1,6 @@
 {
   "name": "homeground",
   "private": true,
-  "workspaces": ["frontend"],
   "scripts": {
     "start": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
