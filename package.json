@@ -5,7 +5,7 @@
     "start": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview",
-    "shopify:dev": "shopify theme dev --store himvsk-cf.myshopify.com --path shopify-theme",
+    "shopify:dev": "shopify theme dev --store himvsk-cf.myshopify.com --path shopify-theme --error-overlay silent",
     "shopify:push": "shopify theme push --unpublished --path shopify-theme --store himvsk-cf.myshopify.com"
   },
   "dependencies": {
