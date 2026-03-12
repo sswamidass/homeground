@@ -1,0 +1,77 @@
+/* ============================================================
+   HOMEGROUND BRAND VARIABLES
+   Defines all Homeground design tokens as --hg-* custom properties.
+   Loaded BEFORE base.css so these tokens are available throughout.
+   Use --hg-* in homeground-overrides.css and any custom liquid sections.
+   ============================================================ */
+
+:root {
+
+  /* ============================================================
+     COLOR PALETTE
+     ============================================================ */
+
+  /* Blues — core brand */
+  --hg-deep-blue:     #0d3b52; /* Primary dark, nav background on scroll */
+  --hg-lake-blue:     #2c5f7a; /* Primary brand, links, accents */
+  --hg-sky-blue:      #5a8fa8; /* Lighter blue, gradients */
+  --hg-light-blue:    #daeaf5; /* Pale blue, card backgrounds */
+
+  /* Greens */
+  --hg-forest-green:  #3d5a4c; /* Deep green, hero gradient */
+  --hg-sage:          #7a8f7e; /* Muted green, secondary text on dark */
+
+  /* Warm tones */
+  --hg-accent-gold:   #b8935f; /* CTA buttons, highlights, badges */
+  --hg-sand:          #dac8ad; /* Warm sand, on-dark text */
+  --hg-warm-sand:     #c5b299; /* Borders on dark backgrounds */
+  --hg-sandy-beige:   #e8dcc8; /* Warm section backgrounds */
+
+  /* Neutrals */
+  --hg-white:         #ffffff;
+  --hg-off-white:     #faf8f5; /* Default page background */
+  --hg-cream:         #f5f1eb; /* Alternate section background */
+  --hg-light-gray:    #e8e6e1; /* Borders, dividers */
+  --hg-dark:          #1a1a1a; /* Primary button, dark text */
+  --hg-text-dark:     #2d2d2d; /* Body text */
+  --hg-text-gray:     #5a5a5a; /* Secondary/muted text */
+
+  /* ============================================================
+     TYPOGRAPHY
+     ============================================================ */
+
+  --hg-font-heading:  'Playfair Display', Georgia, 'Times New Roman', serif;
+  --hg-font-body:     'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ============================================================
+     ELEVATION / SHADOWS
+     ============================================================ */
+
+  --hg-shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.06);
+  --hg-shadow-md:     0 4px 16px rgba(0, 0, 0, 0.08);
+  --hg-shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+
+  --hg-transition:    all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --hg-transition-fast: all 0.25s ease-out;
+
+  /* ============================================================
+     SPACING SCALE (mirrors Homeground's section/component rhythm)
+     ============================================================ */
+
+  --hg-section-padding: 6rem 0;
+  --hg-card-padding:    2rem;
+
+  /* ============================================================
+     BORDER RADIUS
+     ============================================================ */
+
+  --hg-radius-sm:  4px;
+  --hg-radius-md:  8px;
+  --hg-radius-lg:  16px;
+  --hg-radius-pill: 999px;
+
+}
