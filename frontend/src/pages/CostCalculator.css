@@ -1,0 +1,421 @@
+/* ── Hero ── */
+.calc-hero {
+  background: linear-gradient(135deg, var(--deep-blue, #1a3a4a) 0%, var(--forest-green, #2d5a3d) 100%);
+  color: #fff;
+  padding: 60px 24px 48px;
+  text-align: center;
+}
+
+.calc-hero-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.calc-hero h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+}
+
+.calc-hero p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* ── Body layout ── */
+.calc-body {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .calc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Shared card ── */
+.calc-card,
+.result-card {
+  background: #fff;
+  border: 1px solid #e4e8eb;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.calc-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.calc-card-title,
+.result-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--deep-blue, #1a3a4a);
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--lake-blue, #4a90b8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calc-card-hint {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin: -8px 0 14px;
+  line-height: 1.4;
+}
+
+/* ── Forms ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 600px) {
+  .form-grid,
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.form-group input[type='text'],
+.form-group input[type='number'] {
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 0.95rem;
+  color: #111827;
+  background: #f9fafb;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--lake-blue, #4a90b8);
+  box-shadow: 0 0 0 3px rgba(74, 144, 184, 0.15);
+  background: #fff;
+}
+
+.fee-calc {
+  font-size: 0.78rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.fees-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.fees-total-row strong {
+  color: var(--deep-blue, #1a3a4a);
+  font-size: 1rem;
+}
+
+/* ── Items table ── */
+.items-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 14px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.items-table th {
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #6b7280;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.items-table td {
+  padding: 6px 6px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.items-table tfoot td {
+  border-top: 2px solid #e5e7eb;
+  border-bottom: none;
+  padding-top: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--deep-blue, #1a3a4a);
+}
+
+.items-subtotal-label {
+  text-align: right;
+  padding-right: 12px;
+}
+
+.items-subtotal {
+  font-weight: 700;
+  color: var(--deep-blue, #1a3a4a);
+}
+
+.item-input {
+  padding: 6px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  font-size: 0.88rem;
+  background: #f9fafb;
+  color: #111827;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.item-input:focus {
+  outline: none;
+  border-color: var(--lake-blue, #4a90b8);
+  background: #fff;
+}
+
+.item-name {
+  min-width: 140px;
+}
+
+.item-num {
+  max-width: 90px;
+}
+
+.cost-cell {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding-right: 10px;
+  white-space: nowrap;
+  color: #374151;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+
+.remove-btn:hover {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+.add-item-btn {
+  background: none;
+  border: 1px dashed var(--lake-blue, #4a90b8);
+  color: var(--lake-blue, #4a90b8);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.add-item-btn:hover {
+  background: rgba(74, 144, 184, 0.08);
+}
+
+/* ── Results sidebar ── */
+.calc-results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 80px;
+}
+
+@media (max-width: 960px) {
+  .calc-results {
+    position: static;
+  }
+}
+
+.result-card--perbox {
+  border-top: 4px solid var(--lake-blue, #4a90b8);
+}
+
+.result-card--season {
+  border-top: 4px solid var(--forest-green, #2d5a3d);
+}
+
+.result-card--yearly {
+  border-top: 4px solid #f59e0b;
+}
+
+.result-card--breakdown {
+  border-top: 4px solid #8b5cf6;
+}
+
+.result-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: #374151;
+  padding: 2px 0;
+}
+
+.result-row--highlight {
+  font-weight: 700;
+  color: var(--deep-blue, #1a3a4a);
+  font-size: 0.92rem;
+}
+
+.result-row--profit {
+  font-weight: 700;
+  color: var(--forest-green, #2d5a3d);
+  font-size: 0.92rem;
+}
+
+.result-row--final {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--deep-blue, #1a3a4a);
+  padding-top: 6px;
+  border-top: 2px solid #e5e7eb;
+  margin-top: 4px;
+}
+
+.result-val {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.result-val.neg {
+  color: #dc2626;
+}
+
+.result-val.pos {
+  color: var(--forest-green, #2d5a3d);
+}
+
+.result-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 4px 0;
+}
+
+/* ── Cost breakdown bar ── */
+.breakdown-label {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: -8px 0 12px;
+}
+
+.breakdown-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.breakdown-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.breakdown-segment {
+  height: 100%;
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+.seg--items {
+  background: var(--lake-blue, #4a90b8);
+}
+
+.seg--fees {
+  background: #f59e0b;
+}
+
+.seg--profit {
+  background: var(--forest-green, #2d5a3d);
+}
+
+.breakdown-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: #374151;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot--items { background: var(--lake-blue, #4a90b8); }
+.dot--fees  { background: #f59e0b; }
+.dot--profit { background: var(--forest-green, #2d5a3d); }

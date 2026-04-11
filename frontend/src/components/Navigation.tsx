@@ -46,6 +46,7 @@ function Navigation({ isTransparent = false }: NavigationProps) {
           <li><Link to="/coffee" className={isActive('/coffee') ? 'active' : ''} onClick={closeMenu}>Coffee</Link></li>
           <li><Link to="/faq" className={isActive('/faq') ? 'active' : ''} onClick={closeMenu}>FAQ</Link></li>
           <li><Link to="/contact" className={isActive('/contact') ? 'active' : ''} onClick={closeMenu}>Contact</Link></li>
+          <li><Link to="/cost-calculator" className={isActive('/cost-calculator') ? 'active' : ''} onClick={closeMenu}>Cost Calculator</Link></li>
           <li className="nav-cta">
             <Link to="/subscription" className="btn btn-primary" onClick={closeMenu}>Subscribe</Link>
           </li>
