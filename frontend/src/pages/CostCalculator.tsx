@@ -1,129 +1,168 @@
-import { useState, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import './CostCalculator.css';
 
 interface CostItem {
   id: string;
   name: string;
-  qty: number;
-  unitCost: number;
-}
-
-interface FixedCosts {
-  fixedExpenses: number;
-  ownerWage: number;
-  thirdPartyWages: number;
-}
-
-interface SponsorsRevenue {
-  spotlight1: number;
-  spotlight2: number;
+  costPerBox: number;
+  category: 'product' | 'packaging';
 }
 
 const DEFAULT_ITEMS: CostItem[] = [
-  { id: '1', name: 'Boxes', qty: 1000, unitCost: 3.29 },
-  { id: '2', name: 'Info Card', qty: 1000, unitCost: 0.56 },
-  { id: '3', name: 'Postcard', qty: 1000, unitCost: 0.19 },
-  { id: '4', name: 'Tissue Paper', qty: 1000, unitCost: 0.41 },
-  { id: '5', name: 'Tape', qty: 1000, unitCost: 0.11 },
-  { id: '6', name: 'Crinkle Paper', qty: 1000, unitCost: 0.13 },
-  { id: '7', name: 'Shipping Labels', qty: 1000, unitCost: 0.14 },
+  { id: 'p1', name: "Children's Book #1", costPerBox: 0, category: 'product' },
+  { id: 'p2', name: "Children's Book #2", costPerBox: 0, category: 'product' },
+  { id: 'p3', name: "Children's Book #3", costPerBox: 0, category: 'product' },
+  { id: 'p4', name: 'Adult Book',         costPerBox: 0, category: 'product' },
+  { id: 'p5', name: '12oz Coffee Bag',    costPerBox: 0, category: 'product' },
+  { id: 'k1', name: 'Box',               costPerBox: 3.29, category: 'packaging' },
+  { id: 'k2', name: 'Info Card',         costPerBox: 0.56, category: 'packaging' },
+  { id: 'k3', name: 'Postcard',          costPerBox: 0.19, category: 'packaging' },
+  { id: 'k4', name: 'Tissue Paper',      costPerBox: 0.41, category: 'packaging' },
+  { id: 'k5', name: 'Tape',             costPerBox: 0.11, category: 'packaging' },
+  { id: 'k6', name: 'Crinkle Paper',    costPerBox: 0.13, category: 'packaging' },
+  { id: 'k7', name: 'Shipping Labels',  costPerBox: 0.14, category: 'packaging' },
 ];
 
-let nextId = 8;
-
-function fmt(value: number): string {
-  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+function n(v: number | string): number {
+  const num = typeof v === 'string' ? parseFloat(v) : v;
+  return isFinite(num) ? num : 0;
 }
 
-function CostCalculator() {
-  const [boxName, setBoxName] = useState('The Book Box');
-  const [boxQty, setBoxQty] = useState(1000);
+function fmt(v: number): string {
+  return n(v).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+}
+
+function NumInput({
+  value,
+  onChange,
+  min = 0,
+  step = '0.01',
+  className = '',
+}: {
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  step?: string;
+  className?: string;
+}) {
+  const [raw, setRaw] = useState('');
+  const [focused, setFocused] = useState(false);
+
+  return (
+    <input
+      type="text"
+      inputMode="decimal"
+      className={className}
+      value={focused ? raw : (value === 0 ? '' : String(value))}
+      placeholder="0"
+      onFocus={() => {
+        setRaw(value === 0 ? '' : String(value));
+        setFocused(true);
+      }}
+      onChange={e => {
+        const s = e.target.value;
+        if (/^-?\d*\.?\d*$/.test(s)) {
+          setRaw(s);
+          const num = parseFloat(s);
+          onChange(isNaN(num) ? 0 : Math.max(min, num));
+        }
+      }}
+      onBlur={() => {
+        setFocused(false);
+      }}
+    />
+  );
+}
+
+export default function CostCalculator() {
+  const nextId = useRef(200);
+
+  const [boxName, setBoxName]               = useState('The Book Box');
+  const [boxQty, setBoxQty]                 = useState(1000);
   const [seasonsPerYear, setSeasonsPerYear] = useState(4);
-  const [subscriptionPrice, setSubscriptionPrice] = useState(86.95);
+  const [price, setPrice]                   = useState(86.95);
 
   const [items, setItems] = useState<CostItem[]>(DEFAULT_ITEMS);
 
-  const [shopifyRate, setShopifyRate] = useState(2.9);
-  const [rechargeRate, setRechargeRate] = useState(1.0);
-  const [rechargeFlatFee, setRechargeFlatFee] = useState(0.50);
+  const [shopifyRate, setShopifyRate]       = useState(2.9);
+  const [rechargeRate, setRechargeRate]     = useState(1.0);
+  const [rechargeFlatFee, setRechargeFlatFee] = useState(0.5);
 
-  const [fixedCosts, setFixedCosts] = useState<FixedCosts>({
-    fixedExpenses: 0,
-    ownerWage: 0,
-    thirdPartyWages: 0,
-  });
+  const [spotlight1, setSpotlight1]         = useState(500);
+  const [spotlight2, setSpotlight2]         = useState(0);
 
-  const [sponsors, setSponsors] = useState<SponsorsRevenue>({
-    spotlight1: 500,
-    spotlight2: 0,
-  });
+  const [fixedExpenses, setFixedExpenses]   = useState(0);
+  const [ownerWage, setOwnerWage]           = useState(0);
+  const [thirdPartyWages, setThirdPartyWages] = useState(0);
 
-  const [taxRate, setTaxRate] = useState(12.2);
+  const [taxRate, setTaxRate]               = useState(12.2);
 
-  // --- Derived calculations ---
-  const totalItemCostPerBox = items.reduce((sum, item) => {
-    const costContrib = (item.qty / boxQty) * item.unitCost;
-    return sum + costContrib;
-  }, 0);
+  // ── Derived ──────────────────────────────────────────────────
+  const qty     = Math.max(1, n(boxQty));
+  const seasons = Math.max(1, n(seasonsPerYear));
+  const p       = n(price);
 
-  const shopifyFeePerBox = subscriptionPrice * (shopifyRate / 100);
-  const rechargeFeePerBox = subscriptionPrice * (rechargeRate / 100) + rechargeFlatFee;
-  const totalFeesPerBox = shopifyFeePerBox + rechargeFeePerBox;
+  const itemCostPerBox = items.reduce((s, i) => s + n(i.costPerBox), 0);
+  const shopifyFee     = p * (n(shopifyRate) / 100);
+  const rechargeFee    = p * (n(rechargeRate) / 100) + n(rechargeFlatFee);
+  const totalFees      = shopifyFee + rechargeFee;
+  const totalCost      = itemCostPerBox + totalFees;
+  const profitPerBox   = p - totalCost;
+  const margin         = p > 0 ? (profitPerBox / p) * 100 : 0;
 
-  const totalCostPerBox = totalItemCostPerBox + totalFeesPerBox;
-  const profitPerBox = subscriptionPrice - totalCostPerBox;
-  const marginPct = subscriptionPrice > 0 ? (profitPerBox / subscriptionPrice) * 100 : 0;
+  const grossRevSeason  = p * qty;
+  const grossProfSeason = profitPerBox * qty;
+  const sponsorRev      = n(spotlight1) + n(spotlight2);
+  const fixedTotal      = n(fixedExpenses) + n(ownerWage) + n(thirdPartyWages);
+  const netSeason       = grossProfSeason + sponsorRev - fixedTotal;
+  const taxSeason       = netSeason > 0 ? netSeason * (n(taxRate) / 100) : 0;
+  const afterTaxSeason  = netSeason - taxSeason;
 
-  const grossSeasonRevenue = subscriptionPrice * boxQty;
-  const grossSeasonItemCosts = totalItemCostPerBox * boxQty;
-  const grossSeasonFees = totalFeesPerBox * boxQty;
-  const grossSeasonProfit = profitPerBox * boxQty;
+  const netYearly       = netSeason * seasons;
+  const taxYearly       = netYearly > 0 ? netYearly * (n(taxRate) / 100) : 0;
+  const afterTaxYearly  = netYearly - taxYearly;
 
-  const sponsorRevenue = sponsors.spotlight1 + sponsors.spotlight2;
-  const totalFixedCostsSeason = fixedCosts.fixedExpenses + fixedCosts.ownerWage + fixedCosts.thirdPartyWages;
-  const netSeasonProfit = grossSeasonProfit + sponsorRevenue - totalFixedCostsSeason;
-  const taxAmount = netSeasonProfit > 0 ? netSeasonProfit * (taxRate / 100) : 0;
-  const netAfterTaxSeason = netSeasonProfit - taxAmount;
+  // ── Item helpers ─────────────────────────────────────────────
+  const updateName = (id: string, name: string) =>
+    setItems(prev => prev.map(it => it.id === id ? { ...it, name } : it));
 
-  const netYearlyProfit = netSeasonProfit * seasonsPerYear;
-  const taxYearly = netYearlyProfit > 0 ? netYearlyProfit * (taxRate / 100) : 0;
-  const netAfterTaxYearly = netYearlyProfit - taxYearly;
+  const updateCost = (id: string, costPerBox: number) =>
+    setItems(prev => prev.map(it => it.id === id ? { ...it, costPerBox } : it));
 
-  // --- Item management ---
-  const updateItem = useCallback((id: string, field: keyof CostItem, value: string | number) => {
-    setItems(prev => prev.map(item =>
-      item.id === id ? { ...item, [field]: field === 'name' ? value : Number(value) } : item
-    ));
-  }, []);
+  const removeItem = (id: string) =>
+    setItems(prev => prev.filter(it => it.id !== id));
 
-  const addItem = useCallback(() => {
-    setItems(prev => [...prev, { id: String(nextId++), name: 'New Item', qty: 1000, unitCost: 0 }]);
-  }, []);
+  const addItem = (category: 'product' | 'packaging') =>
+    setItems(prev => [...prev, {
+      id: String(nextId.current++),
+      name: category === 'product' ? 'New Product' : 'New Packing Item',
+      costPerBox: 0,
+      category,
+    }]);
 
-  const removeItem = useCallback((id: string) => {
-    setItems(prev => prev.filter(item => item.id !== id));
-  }, []);
+  const productItems   = items.filter(i => i.category === 'product');
+  const packagingItems = items.filter(i => i.category === 'packaging');
 
+  // ── Render ───────────────────────────────────────────────────
   return (
-    <div className="cost-calculator">
-      <div className="calc-hero">
-        <div className="calc-hero-inner">
-          <h1>Box Cost Calculator</h1>
-          <p>Model your subscription box costs, profits, and projections in real time.</p>
-        </div>
+    <div className="cc">
+
+      <div className="cc-hero">
+        <h1>Box Cost Calculator</h1>
+        <p>Model costs, profits, and projections in real time.</p>
       </div>
 
-      <div className="calc-body">
-        <div className="calc-grid">
+      <div className="cc-body">
+        <div className="cc-layout">
 
-          {/* ── LEFT COLUMN: Inputs ── */}
-          <div className="calc-inputs">
+          {/* ── INPUTS ── */}
+          <div className="cc-inputs">
 
-            {/* Box Setup */}
-            <section className="calc-card">
-              <h2 className="calc-card-title">Box Setup</h2>
-              <div className="form-grid">
-                <div className="form-group">
+            {/* Box setup */}
+            <section className="cc-card">
+              <h2 className="cc-card-title">Box Setup</h2>
+              <div className="cc-form-grid">
+                <div className="cc-field">
                   <label>Box Name</label>
                   <input
                     type="text"
@@ -131,381 +170,242 @@ function CostCalculator() {
                     onChange={e => setBoxName(e.target.value)}
                   />
                 </div>
-                <div className="form-group">
-                  <label>Boxes per Season</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={boxQty}
-                    onChange={e => setBoxQty(Number(e.target.value))}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Seasons per Year</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={12}
-                    value={seasonsPerYear}
-                    onChange={e => setSeasonsPerYear(Number(e.target.value))}
-                  />
-                </div>
-                <div className="form-group">
+                <div className="cc-field">
                   <label>Subscription Price / Box ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    value={subscriptionPrice}
-                    onChange={e => setSubscriptionPrice(Number(e.target.value))}
-                  />
+                  <NumInput value={price} onChange={setPrice} min={0} />
+                </div>
+                <div className="cc-field">
+                  <label>Boxes per Season</label>
+                  <NumInput value={boxQty} onChange={v => setBoxQty(Math.max(1, Math.round(v)))} min={1} step="1" />
+                </div>
+                <div className="cc-field">
+                  <label>Seasons per Year</label>
+                  <NumInput value={seasonsPerYear} onChange={v => setSeasonsPerYear(Math.max(1, Math.round(v)))} min={1} step="1" />
                 </div>
               </div>
             </section>
 
-            {/* Packaging & Product Items */}
-            <section className="calc-card">
-              <h2 className="calc-card-title">Packaging &amp; Product Items</h2>
-              <p className="calc-card-hint">Enter each item's total quantity ordered and unit cost. Cost per box is calculated proportionally to your season quantity.</p>
-              <div className="items-table-wrapper">
-                <table className="items-table">
-                  <thead>
-                    <tr>
-                      <th>Item</th>
-                      <th>Order Qty</th>
-                      <th>Unit Cost ($)</th>
-                      <th>Cost / Box</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {items.map(item => {
-                      const costPerBox = (item.qty / boxQty) * item.unitCost;
-                      return (
-                        <tr key={item.id}>
-                          <td>
-                            <input
-                              type="text"
-                              className="item-input item-name"
-                              value={item.name}
-                              onChange={e => updateItem(item.id, 'name', e.target.value)}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="item-input item-num"
-                              min={1}
-                              value={item.qty}
-                              onChange={e => updateItem(item.id, 'qty', e.target.value)}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="item-input item-num"
-                              min={0}
-                              step={0.01}
-                              value={item.unitCost}
-                              onChange={e => updateItem(item.id, 'unitCost', e.target.value)}
-                            />
-                          </td>
-                          <td className="cost-cell">{fmt(costPerBox)}</td>
-                          <td>
-                            <button
-                              className="remove-btn"
-                              onClick={() => removeItem(item.id)}
-                              aria-label="Remove item"
-                            >
-                              ×
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td colSpan={3} className="items-subtotal-label">Items subtotal</td>
-                      <td className="cost-cell items-subtotal">{fmt(totalItemCostPerBox)}</td>
-                      <td></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <button className="add-item-btn" onClick={addItem}>+ Add Item</button>
+            {/* Products */}
+            <section className="cc-card">
+              <h2 className="cc-card-title">Products</h2>
+              <p className="cc-hint">Wholesale / bulk cost per unit included in each box.</p>
+              <ItemsTable
+                items={productItems}
+                onNameChange={updateName}
+                onCostChange={updateCost}
+                onRemove={removeItem}
+                qty={qty}
+              />
+              <button className="cc-add-btn" onClick={() => addItem('product')}>+ Add Product</button>
             </section>
 
-            {/* Processing Fees */}
-            <section className="calc-card">
-              <h2 className="calc-card-title">Processing Fees</h2>
-              <p className="calc-card-hint">Fees are calculated per transaction based on subscription price.</p>
-              <div className="form-grid form-grid-3">
-                <div className="form-group">
+            {/* Packaging */}
+            <section className="cc-card">
+              <h2 className="cc-card-title">Packaging Materials</h2>
+              <p className="cc-hint">Per-unit cost of each packaging item per box shipped.</p>
+              <ItemsTable
+                items={packagingItems}
+                onNameChange={updateName}
+                onCostChange={updateCost}
+                onRemove={removeItem}
+                qty={qty}
+              />
+              <button className="cc-add-btn" onClick={() => addItem('packaging')}>+ Add Item</button>
+            </section>
+
+            {/* Processing fees */}
+            <section className="cc-card">
+              <h2 className="cc-card-title">Processing Fees</h2>
+              <p className="cc-hint">Calculated per transaction based on subscription price.</p>
+              <div className="cc-form-grid cc-form-grid-3">
+                <div className="cc-field">
                   <label>Shopify Fee (%)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    value={shopifyRate}
-                    onChange={e => setShopifyRate(Number(e.target.value))}
-                  />
-                  <span className="fee-calc">{fmt(shopifyFeePerBox)} / box</span>
+                  <NumInput value={shopifyRate} onChange={setShopifyRate} />
+                  <span className="cc-sub">{fmt(shopifyFee)} / box</span>
                 </div>
-                <div className="form-group">
+                <div className="cc-field">
                   <label>Recharge Fee (%)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    value={rechargeRate}
-                    onChange={e => setRechargeRate(Number(e.target.value))}
-                  />
+                  <NumInput value={rechargeRate} onChange={setRechargeRate} />
                 </div>
-                <div className="form-group">
-                  <label>Recharge Flat Fee ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    value={rechargeFlatFee}
-                    onChange={e => setRechargeFlatFee(Number(e.target.value))}
-                  />
-                  <span className="fee-calc">{fmt(rechargeFeePerBox)} / box</span>
+                <div className="cc-field">
+                  <label>Recharge Flat ($)</label>
+                  <NumInput value={rechargeFlatFee} onChange={setRechargeFlatFee} />
+                  <span className="cc-sub">{fmt(rechargeFee)} / box</span>
                 </div>
               </div>
-              <div className="fees-total-row">
+              <div className="cc-fees-total">
                 <span>Total fees per box</span>
-                <strong>{fmt(totalFeesPerBox)}</strong>
+                <strong>{fmt(totalFees)}</strong>
               </div>
             </section>
 
-            {/* Sponsored Spotlights */}
-            <section className="calc-card">
-              <h2 className="calc-card-title">Sponsored Spotlights</h2>
-              <p className="calc-card-hint">Additional revenue from brand partnerships per season.</p>
-              <div className="form-grid">
-                <div className="form-group">
+            {/* Sponsors */}
+            <section className="cc-card">
+              <h2 className="cc-card-title">Sponsored Spotlights</h2>
+              <p className="cc-hint">Additional revenue from brand partnerships per season.</p>
+              <div className="cc-form-grid">
+                <div className="cc-field">
                   <label>Spotlight #1 ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    value={sponsors.spotlight1}
-                    onChange={e => setSponsors(s => ({ ...s, spotlight1: Number(e.target.value) }))}
-                  />
+                  <NumInput value={spotlight1} onChange={setSpotlight1} step="1" />
                 </div>
-                <div className="form-group">
+                <div className="cc-field">
                   <label>Spotlight #2 ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    value={sponsors.spotlight2}
-                    onChange={e => setSponsors(s => ({ ...s, spotlight2: Number(e.target.value) }))}
-                  />
+                  <NumInput value={spotlight2} onChange={setSpotlight2} step="1" />
                 </div>
               </div>
             </section>
 
-            {/* Fixed Costs */}
-            <section className="calc-card">
-              <h2 className="calc-card-title">Fixed Costs per Season</h2>
-              <div className="form-grid">
-                <div className="form-group">
+            {/* Fixed costs */}
+            <section className="cc-card">
+              <h2 className="cc-card-title">Fixed Costs per Season</h2>
+              <div className="cc-form-grid">
+                <div className="cc-field">
                   <label>Fixed Expenses ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    value={fixedCosts.fixedExpenses}
-                    onChange={e => setFixedCosts(f => ({ ...f, fixedExpenses: Number(e.target.value) }))}
-                  />
+                  <NumInput value={fixedExpenses} onChange={setFixedExpenses} step="1" />
                 </div>
-                <div className="form-group">
+                <div className="cc-field">
                   <label>Owner Wage ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    value={fixedCosts.ownerWage}
-                    onChange={e => setFixedCosts(f => ({ ...f, ownerWage: Number(e.target.value) }))}
-                  />
+                  <NumInput value={ownerWage} onChange={setOwnerWage} step="1" />
                 </div>
-                <div className="form-group">
+                <div className="cc-field">
                   <label>3rd Party Wages ($)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    value={fixedCosts.thirdPartyWages}
-                    onChange={e => setFixedCosts(f => ({ ...f, thirdPartyWages: Number(e.target.value) }))}
-                  />
+                  <NumInput value={thirdPartyWages} onChange={setThirdPartyWages} step="1" />
                 </div>
-                <div className="form-group">
+                <div className="cc-field">
                   <label>Tax Rate (%)</label>
-                  <input
-                    type="number"
-                    min={0}
-                    max={100}
-                    step={0.1}
-                    value={taxRate}
-                    onChange={e => setTaxRate(Number(e.target.value))}
-                  />
-                </div>
-              </div>
-            </section>
-          </div>
-
-          {/* ── RIGHT COLUMN: Results ── */}
-          <div className="calc-results">
-
-            {/* Per Box Summary */}
-            <section className="result-card result-card--perbox">
-              <h3 className="result-card-title">Per Box</h3>
-              <div className="result-rows">
-                <div className="result-row">
-                  <span>Subscription Price</span>
-                  <span className="result-val">{fmt(subscriptionPrice)}</span>
-                </div>
-                <div className="result-divider" />
-                <div className="result-row">
-                  <span>Item Costs</span>
-                  <span className="result-val neg">{fmt(totalItemCostPerBox)}</span>
-                </div>
-                <div className="result-row">
-                  <span>Processing Fees</span>
-                  <span className="result-val neg">{fmt(totalFeesPerBox)}</span>
-                </div>
-                <div className="result-divider" />
-                <div className="result-row result-row--highlight">
-                  <span>Total Cost / Box</span>
-                  <span className="result-val">{fmt(totalCostPerBox)}</span>
-                </div>
-                <div className="result-row result-row--profit">
-                  <span>Profit / Box</span>
-                  <span className="result-val">{fmt(profitPerBox)}</span>
-                </div>
-                <div className="result-row">
-                  <span>Margin</span>
-                  <span className="result-val">{marginPct.toFixed(1)}%</span>
+                  <NumInput value={taxRate} onChange={setTaxRate} />
                 </div>
               </div>
             </section>
 
-            {/* Season Summary */}
-            <section className="result-card result-card--season">
-              <h3 className="result-card-title">Season ({boxQty.toLocaleString()} boxes)</h3>
-              <div className="result-rows">
-                <div className="result-row">
-                  <span>Gross Revenue</span>
-                  <span className="result-val">{fmt(grossSeasonRevenue)}</span>
-                </div>
-                <div className="result-row">
-                  <span>Item Costs</span>
-                  <span className="result-val neg">{fmt(grossSeasonItemCosts)}</span>
-                </div>
-                <div className="result-row">
-                  <span>Processing Fees</span>
-                  <span className="result-val neg">{fmt(grossSeasonFees)}</span>
-                </div>
-                <div className="result-divider" />
-                <div className="result-row result-row--highlight">
-                  <span>Gross Profit</span>
-                  <span className="result-val">{fmt(grossSeasonProfit)}</span>
-                </div>
-                {sponsorRevenue > 0 && (
-                  <div className="result-row">
-                    <span>Sponsored Spotlights</span>
-                    <span className="result-val pos">+{fmt(sponsorRevenue)}</span>
-                  </div>
-                )}
-                {totalFixedCostsSeason > 0 && (
-                  <div className="result-row">
-                    <span>Fixed Costs</span>
-                    <span className="result-val neg">{fmt(totalFixedCostsSeason)}</span>
-                  </div>
-                )}
-                <div className="result-divider" />
-                <div className="result-row result-row--profit">
-                  <span>Net Season Profit</span>
-                  <span className="result-val">{fmt(netSeasonProfit)}</span>
-                </div>
-                <div className="result-row">
-                  <span>Tax ({taxRate}%)</span>
-                  <span className="result-val neg">{fmt(taxAmount)}</span>
-                </div>
-                <div className="result-row result-row--final">
-                  <span>After-Tax Profit</span>
-                  <span className="result-val">{fmt(netAfterTaxSeason)}</span>
-                </div>
-              </div>
+          </div>{/* /cc-inputs */}
+
+          {/* ── RESULTS ── */}
+          <div className="cc-results">
+
+            <section className="cc-result-card cc-result-card--box">
+              <h3>Per Box — {boxName}</h3>
+              <ResultRow label="Subscription Price" value={fmt(p)} />
+              <div className="cc-rule" />
+              <ResultRow label="Products" value={fmt(items.filter(i=>i.category==='product').reduce((s,i)=>s+n(i.costPerBox),0))} neg />
+              <ResultRow label="Packaging" value={fmt(items.filter(i=>i.category==='packaging').reduce((s,i)=>s+n(i.costPerBox),0))} neg />
+              <ResultRow label="Processing Fees" value={fmt(totalFees)} neg />
+              <div className="cc-rule" />
+              <ResultRow label="Total Cost / Box" value={fmt(totalCost)} bold />
+              <ResultRow label="Profit / Box" value={fmt(profitPerBox)} profit />
+              <ResultRow label="Margin" value={`${margin.toFixed(1)}%`} />
             </section>
 
-            {/* Yearly Summary */}
-            <section className="result-card result-card--yearly">
-              <h3 className="result-card-title">Yearly ({seasonsPerYear} seasons)</h3>
-              <div className="result-rows">
-                <div className="result-row">
-                  <span>Gross Revenue</span>
-                  <span className="result-val">{fmt(grossSeasonRevenue * seasonsPerYear)}</span>
-                </div>
-                <div className="result-divider" />
-                <div className="result-row result-row--highlight">
-                  <span>Gross Profit</span>
-                  <span className="result-val">{fmt(grossSeasonProfit * seasonsPerYear)}</span>
-                </div>
-                <div className="result-row result-row--profit">
-                  <span>Net Yearly Profit</span>
-                  <span className="result-val">{fmt(netYearlyProfit)}</span>
-                </div>
-                <div className="result-row">
-                  <span>Tax ({taxRate}%)</span>
-                  <span className="result-val neg">{fmt(taxYearly)}</span>
-                </div>
-                <div className="result-row result-row--final">
-                  <span>After-Tax Profit</span>
-                  <span className="result-val">{fmt(netAfterTaxYearly)}</span>
-                </div>
-              </div>
+            <section className="cc-result-card cc-result-card--season">
+              <h3>Season ({qty.toLocaleString()} boxes)</h3>
+              <ResultRow label="Gross Revenue" value={fmt(grossRevSeason)} />
+              <ResultRow label="Total Costs" value={fmt((itemCostPerBox + totalFees) * qty)} neg />
+              <div className="cc-rule" />
+              <ResultRow label="Gross Profit" value={fmt(grossProfSeason)} bold />
+              {sponsorRev > 0 && <ResultRow label="Sponsored Spotlights" value={`+${fmt(sponsorRev)}`} pos />}
+              {fixedTotal > 0  && <ResultRow label="Fixed Costs" value={fmt(fixedTotal)} neg />}
+              <div className="cc-rule" />
+              <ResultRow label="Net Profit" value={fmt(netSeason)} profit />
+              <ResultRow label={`Tax (${taxRate}%)`} value={fmt(taxSeason)} neg />
+              <ResultRow label="After-Tax Profit" value={fmt(afterTaxSeason)} final />
             </section>
 
-            {/* Cost Breakdown Bar */}
-            <section className="result-card result-card--breakdown">
-              <h3 className="result-card-title">Cost Breakdown</h3>
-              <p className="breakdown-label">as % of subscription price</p>
-              {subscriptionPrice > 0 && (
-                <div className="breakdown-bar-wrapper">
-                  <div className="breakdown-bar">
-                    <div
-                      className="breakdown-segment seg--items"
-                      style={{ width: `${Math.min((totalItemCostPerBox / subscriptionPrice) * 100, 100)}%` }}
-                      title={`Items: ${fmt(totalItemCostPerBox)}`}
-                    />
-                    <div
-                      className="breakdown-segment seg--fees"
-                      style={{ width: `${Math.min((totalFeesPerBox / subscriptionPrice) * 100, 100)}%` }}
-                      title={`Fees: ${fmt(totalFeesPerBox)}`}
-                    />
-                    <div
-                      className="breakdown-segment seg--profit"
-                      style={{ width: `${Math.max(Math.min((profitPerBox / subscriptionPrice) * 100, 100), 0)}%` }}
-                      title={`Profit: ${fmt(profitPerBox)}`}
-                    />
-                  </div>
-                  <div className="breakdown-legend">
-                    <div className="legend-item"><span className="legend-dot dot--items" />Items ({((totalItemCostPerBox / subscriptionPrice) * 100).toFixed(1)}%)</div>
-                    <div className="legend-item"><span className="legend-dot dot--fees" />Fees ({((totalFeesPerBox / subscriptionPrice) * 100).toFixed(1)}%)</div>
-                    <div className="legend-item"><span className="legend-dot dot--profit" />Profit ({Math.max(marginPct, 0).toFixed(1)}%)</div>
-                  </div>
-                </div>
-              )}
+            <section className="cc-result-card cc-result-card--year">
+              <h3>Yearly ({seasons} seasons)</h3>
+              <ResultRow label="Gross Revenue" value={fmt(grossRevSeason * seasons)} />
+              <div className="cc-rule" />
+              <ResultRow label="Gross Profit" value={fmt(grossProfSeason * seasons)} bold />
+              <ResultRow label="Net Profit" value={fmt(netYearly)} profit />
+              <ResultRow label={`Tax (${taxRate}%)`} value={fmt(taxYearly)} neg />
+              <ResultRow label="After-Tax Profit" value={fmt(afterTaxYearly)} final />
             </section>
-          </div>
+
+            {/* Breakdown bar */}
+            {p > 0 && (
+              <section className="cc-result-card cc-result-card--bar">
+                <h3>Cost Breakdown</h3>
+                <p className="cc-hint">% of subscription price</p>
+                <div className="cc-bar">
+                  <div className="cc-bar-seg cc-bar-seg--product" style={{ width: `${Math.min(Math.max(items.filter(i=>i.category==='product').reduce((s,i)=>s+n(i.costPerBox),0)/p*100,0),100)}%` }} />
+                  <div className="cc-bar-seg cc-bar-seg--packaging" style={{ width: `${Math.min(Math.max(items.filter(i=>i.category==='packaging').reduce((s,i)=>s+n(i.costPerBox),0)/p*100,0),100)}%` }} />
+                  <div className="cc-bar-seg cc-bar-seg--fees" style={{ width: `${Math.min(Math.max(totalFees/p*100,0),100)}%` }} />
+                  <div className="cc-bar-seg cc-bar-seg--profit" style={{ width: `${Math.min(Math.max(profitPerBox/p*100,0),100)}%` }} />
+                </div>
+                <div className="cc-legend">
+                  <span className="cc-legend-dot cc-legend-dot--product" />Products
+                  <span className="cc-legend-dot cc-legend-dot--packaging" />Packaging
+                  <span className="cc-legend-dot cc-legend-dot--fees" />Fees
+                  <span className="cc-legend-dot cc-legend-dot--profit" />Profit
+                </div>
+              </section>
+            )}
+
+          </div>{/* /cc-results */}
+
         </div>
+      </div>
+
+    </div>
+  );
+}
+
+// ── Sub-components ───────────────────────────────────────────────
+
+function ItemsTable({
+  items, onNameChange, onCostChange, onRemove, qty,
+}: {
+  items: CostItem[];
+  onNameChange: (id: string, name: string) => void;
+  onCostChange: (id: string, cost: number) => void;
+  onRemove: (id: string) => void;
+  qty: number;
+}) {
+  if (items.length === 0) return null;
+  return (
+    <div className="cc-items">
+      <div className="cc-items-head">
+        <span>Item</span>
+        <span>Cost / Box</span>
+        <span>Season Total</span>
+        <span />
+      </div>
+      {items.map(item => (
+        <div className="cc-items-row" key={item.id}>
+          <input
+            type="text"
+            className="cc-item-name"
+            value={item.name}
+            onChange={e => onNameChange(item.id, e.target.value)}
+          />
+          <NumInput
+            className="cc-item-cost"
+            value={item.costPerBox}
+            onChange={v => onCostChange(item.id, v)}
+          />
+          <span className="cc-item-total">{fmt(item.costPerBox * qty)}</span>
+          <button className="cc-remove" onClick={() => onRemove(item.id)} aria-label="Remove">×</button>
+        </div>
+      ))}
+      <div className="cc-items-foot">
+        <span>Subtotal</span>
+        <span>{fmt(items.reduce((s, i) => s + n(i.costPerBox), 0))}</span>
+        <span>{fmt(items.reduce((s, i) => s + n(i.costPerBox), 0) * qty)}</span>
+        <span />
       </div>
     </div>
   );
 }
 
-export default CostCalculator;
+function ResultRow({
+  label, value, bold, profit, final, neg, pos,
+}: {
+  label: string; value: string;
+  bold?: boolean; profit?: boolean; final?: boolean; neg?: boolean; pos?: boolean;
+}) {
+  return (
+    <div className={`cc-rrow ${bold ? 'cc-rrow--bold' : ''} ${profit ? 'cc-rrow--profit' : ''} ${final ? 'cc-rrow--final' : ''}`}>
+      <span>{label}</span>
+      <span className={neg ? 'cc-neg' : pos ? 'cc-pos' : ''}>{value}</span>
+    </div>
+  );
+}
