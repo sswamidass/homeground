@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for f in templates/page.subscription.json templates/page.faq.json templates/page.contact.json)",
+      "Bash(do echo \"=== $f ===\")",
+      "Bash(python3 -c \"import json,sys; json.load\\(open\\(''$f''\\)\\); print\\(''valid JSON''\\)\")",
+      "Bash(done)",
+      "Bash(node -e:*)"
+    ]
+  }
+}
